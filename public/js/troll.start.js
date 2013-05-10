@@ -18,7 +18,6 @@ require(['js/troll', 'js/utils', 'js/box2d/world'], function (Troll,Utils, World
   };
   Trolls.prototype.addBody = function(x,y) {
       var body = this.boxWorld.createObject(x,y);
-      console.log(body);
       this.elements.push(new Troll(body));
   };
 
@@ -30,9 +29,12 @@ require(['js/troll', 'js/utils', 'js/box2d/world'], function (Troll,Utils, World
   Trolls.prototype.addEvents = function(){
     var self = this;
     document.onmousedown = function(e) {
-      var index = self.elements.length;
       self.addBody(e.offsetX, e.offsetY);
     };
+    var el = document.getElementsByTagName("canvas")[0];
+    el.addEventListener('touchstart', function(e) {
+      self.addBody(e.touches[0].pageX, e.touches[0].pageY);
+    });
   };
   Trolls.prototype.resize = function(){
     this.canvas.width = window.innerWidth;

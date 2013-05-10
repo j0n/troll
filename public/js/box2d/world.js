@@ -8,17 +8,15 @@ define(function(require) {
         this.bodies = {};
         this.SCALE = 1;
         this.world = null;
-        this.debug = true;
+        this.debug = false;
         console.log('hello world');
         this.init();
     }
     World.prototype.init = function(){
       this.createWorld();
-      if (this.debug){
-        setInterval(function(){
-           this.update();
-        }.bind(this), 1/60);
-      }
+      setInterval(function(){
+         this.update();
+      }.bind(this), 1/60);
     }
 
     World.prototype.update = function(){
@@ -43,15 +41,16 @@ define(function(require) {
          bodyDef.type = b2Body.b2_dynamicBody;
          bodyDef.userData = 'circle';
          fixDef.shape = new b2CircleShape(
-           30 * this.SCALE //radius
+           10 * this.SCALE //radius
          );
-         bodyDef.position.x = this.canvas.width / 2;
-         bodyDef.position.y = 10;
-        bodyDef.density = 2;
+         fixDef.velocity = 100;
+         bodyDef.position.x = x;
+         bodyDef.position.y = y;
+         bodyDef.density = 2;
          bodyDef.friction = 1;
          var body = this.registerBody(bodyDef);
          body.CreateFixture(fixDef);
-         return body;
+         return { def: fixDef, body: body};
     }
 
     World.prototype.createWorld = function(){
@@ -67,7 +66,7 @@ define(function(require) {
             b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
          
          this.world = new b2World(
-               new this.b2Vec2(0, 40)    //gravity
+               new this.b2Vec2(0, 10)    //gravity
             ,  true                 //allow sleep
          );
          var SCALE = this.SCALE;

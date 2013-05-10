@@ -42,7 +42,17 @@ module.exports = function(grunt) {
          console: true,
          module: true
        }
-                                          }
+     }
+   },
+   requirejs: {
+     compile: {
+       options: {
+         optimize: 'uglify',
+          baseUrl: "./public",
+          name: "js/troll.start",
+          out: "main-built.js"
+       }
+     }
    }
   });
 
@@ -50,8 +60,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
 
   // Default task(s).
-  grunt.registerTask('default', ['concat', 'uglify']);
+  grunt.registerTask('default', ['concat', 'uglify', 'requirejs']);
 
 };
