@@ -1,19 +1,34 @@
 define(function(){
-  var Troll = function(body) {
-    this.x = 80;
-    this.y = 80;
-    this.val = body;
+  var Troll = function(settings) {
+    this.id = settings.id;
+    this.radius = settings.radius;
+    this.x = 0;
+    this.y = 0;
     this.color = '#000000';
-    this.radius = 2;
+    this.head = settings.id.indexOf('head') > -1;
+    if (this.head) {
+      this.radius = this.radius * 4;
+      this.image = new Image();
+    }
   };
+  Troll.prototype.update = function(state){
+    this.x = state.x;
+    this.y = state.y;
+    //this.radus = state.radius;
+  }
 
   Troll.prototype.draw = function(ctx){
-    var pos = this.val.body.GetPosition();
+    if (this.head) {
+      var img=document.getElementById("scream");
+      ctx.drawImage(img,10,10);
+    }
+    else {
     ctx.beginPath();
     ctx.fillStyle = '#000';
-    ctx.arc(pos.x,pos.y,this.val.def.shape.GetRadius(),0,2*Math.PI);
-    ctx.stroke();
+    ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
+    ctx.closePath();
     ctx.fill();
+    }
   };
   return Troll;
 });

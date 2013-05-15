@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['public/lib/*.js', '!public/lib/box2dweb.min.js'],
-        dest: 'public/dest/libs.js'
+        dest: 'public/dist/libs.js'
       }
     },
     watch: {
@@ -28,7 +28,7 @@ module.exports = function(grunt) {
     uglify: {
       libs: {
         files: {
-          'public/dest/libs.min.js': ['public/dest/libs.js']
+          'public/dist/libs.min.js': ['public/dist/libs.js']
         }
       }
     },
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
          optimize: 'uglify',
           baseUrl: "./public",
           name: "js/troll.start",
-          out: "main-built.js"
+          out: "public/dist/<%= pkg.name %>-<%= pkg.version %>.min.js"
        }
      }
    }
